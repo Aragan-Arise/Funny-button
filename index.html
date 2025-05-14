@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Comedy Glowing Button</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #funnyButton {
+      position: absolute;
+      padding: 20px 40px;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      background-color: #ff00ff;
+       text-decoration: none;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+      transition: left 0.1s ease, top 0.1s ease;
+    }
+
+  
+  </style>
+</head>
+<body>
+
+<button id="funnyButton">Catch Me 😜</button>
+
+<script>
+  const button = document.getElementById('funnyButton');
+  const margin = 120;
+
+  // Start at the center
+  let posX = window.innerWidth / 2 - button.offsetWidth / 2;
+  let posY = window.innerHeight / 2 - button.offsetHeight / 2;
+
+  button.style.left = posX + 'px';
+  button.style.top = posY + 'px';
+
+  document.addEventListener('mousemove', (e) => {
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+
+    const buttonRect = button.getBoundingClientRect();
+    const buttonX = buttonRect.left + buttonRect.width / 2;
+    const buttonY = buttonRect.top + buttonRect.height / 2;
+
+    const distance = Math.hypot(mouseX - buttonX, mouseY - buttonY);
+
+    if (distance < margin) {
+      const angle = Math.random() * Math.PI * 2;
+      const moveX = Math.cos(angle) * 150;
+      const moveY = Math.sin(angle) * 150;
+
+      posX += moveX;
+      posY += moveY;
+
+      // Clamp to window bounds
+      posX = Math.max(0, Math.min(window.innerWidth - button.offsetWidth, posX));
+      posY = Math.max(0, Math.min(window.innerHeight - button.offsetHeight, posY));
+
+      button.style.left = posX + 'px';
+      button.style.top = posY + 'px';
+    }
+  });
+</script>
+
+</body>
+</html>
